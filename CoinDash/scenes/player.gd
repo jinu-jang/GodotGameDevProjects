@@ -11,4 +11,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	velocity = Input.get_vector(
+		"ui_left",
+		"ui_right",
+		"ui_up",
+		"ui_down"
+	);
+	position += velocity * speed * delta;
+
+	# Limit movement to within screen
+	position.x = clamp(position.x, 0, screensize.x);
+	position.y = clamp(position.y, 0, screensize.y);
