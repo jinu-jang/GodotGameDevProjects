@@ -14,7 +14,8 @@ func _ready():
 	$Player.screensize = screensize;
 	$Player.hide();
 
-	new_game();
+	$HUD.update_score(score)
+	$HUD.update_timer(time_left)
 
 func _process(delta):
 	if playing and get_tree().get_nodes_in_group("coins").size() == 0:
@@ -22,7 +23,7 @@ func _process(delta):
 		time_left += 5;
 		spawn_coins();
 
-## Reset the game and start fresh
+## Starts a new game, expects game to have been reset
 func new_game():
 	playing = true;
 	level = 1;
@@ -42,3 +43,27 @@ func spawn_coins():
 			randi_range(0, screensize.x),
 			randi_range(0, screensize.y)
 		);
+
+## Clean up coins, kill timer, kill player
+func game_over():
+	playing = false
+	$GameTimer.stop()
+	get_tree().call_group("coins", "queue_free")
+	$HUD.show_game_over()
+	$Player.die()
+
+func _on_game_timer_timeout() -> void:
+	time_left -= 1
+	$HUD.update_timer(time_left)
+	if time_left <= 0:
+		game_over()
+
+func _on_player_hurt() -> void:
+	game_over()
+
+func _on_player_pickup() -> void:
+	score += 1
+	$HUD.update_score(score)
+
+func _on_hud_start_game() -> void:
+	new_game()
