@@ -13,11 +13,13 @@ var screensize = Vector2(480, 720);
 func _ready() -> void:
 	pass # Replace with function body.
 
+## Initialize the Player object
 func start():
 	set_process(true);
 	position = screensize / 2;
 	$AnimatedSprite2D.animation = "idle";
 
+## Despawn the Player object
 func die():
 	$AnimatedSprite2D.animation = "hurt";
 	set_process(false);
