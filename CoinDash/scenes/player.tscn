@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://c5dq0sskew4am"]
+[gd_scene load_steps=16 format=3 uid="uid://c5dq0sskew4am"]
 
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_0ey3h"]
 [ext_resource type="Texture2D" uid="uid://c3sryr6x83gst" path="res://assets/player/hurt/player-hurt-1.png" id="1_ognh6"]
 [ext_resource type="Texture2D" uid="uid://oyq1tfrdsax3" path="res://assets/player/hurt/player-hurt-2.png" id="2_6njxm"]
 [ext_resource type="Texture2D" uid="uid://wr4ia2omjr4d" path="res://assets/player/idle/player-idle-1.png" id="3_ui8sw"]
@@ -67,12 +68,21 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56bu8"]
+size = Vector2(28, 43)
+
 [node name="Player" type="Area2D"]
+script = ExtResource("1_0ey3h")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_vhlsl")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.575874
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_56bu8")
